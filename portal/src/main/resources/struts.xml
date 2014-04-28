@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<include file="sturts-default.xml"/>
+	<include file="struts-test.xml"/>
+	<package name="default" extends="struts-default" namespace="/">
+		<action name="insertSample" class="sampleAction" method="addSample">
+			<result>/sample.jsp</result>
+			<result name="invalid.token">/error.jsp</result>
+			<interceptor-ref name="token"></interceptor-ref>
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+		</action>
+		<action name="getProduct" class="sampleAction" method="getProduct">
+			<result name="success">/sample.jsp</result>
+		</action>
+		<action name="getGrade" class="sampleAction" method="getGrade">
+			<result name="success">/sample.jsp</result>
+		</action>
+		<action name="getSample" class="sampleAction" method="getSample">
+			<result name="success">/sample.jsp</result>
+		</action>
+		<action name="getSampleOne" class="sampleAction" method="getSampleOne">
+			<result name="success">/sample.jsp</result>
+		</action>
+		<action name="updateSample" class="sampleAction" method="updateSample">
+			<result name="success">/sample.jsp</result>
+		</action>
+		<action name="getSampleKeep" class="sampleAction" method="getSampleKeep">
+			<result name="success">/sample.jsp</result>
+		</action>
+		
+	</package>
+
+</struts>    

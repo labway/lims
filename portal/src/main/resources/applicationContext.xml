@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd"
+	default-lazy-init="false">
+	<bean id="sqlSessionFactoryManager" class="com.labway.portal.service.SqlSessionFactoryManager" init-method="init">
+		<property name="factoryMap">
+			<map>
+				<entry key="FOOD" value-ref="sqlSessionFactory_food"></entry>
+				<entry key="PACKAGE" value-ref="sqlSessionFactory_package"></entry>
+			</map>
+		</property>
+	</bean>
+	<bean id="sampleService" class="com.labway.portal.service.impl.SampleServiceImpl">
+		<property name="sqlSessionFactoryManager" ref="sqlSessionFactoryManager"></property>
+	</bean>
+	<bean name="sampleAction" class="com.labway.portal.action.SampleAction"
+		scope="prototype">
+		<property name="sampleService" ref="sampleService"></property>
+	</bean>
+</beans>

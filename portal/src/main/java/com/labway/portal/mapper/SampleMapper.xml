@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.labway.portal.mapper.SampleMapper">
+	<insert id="insertSample" parameterType="com.labway.portal.po.Sample">
+		<selectKey resultType="int" order="BEFORE" keyProperty="sample_number">
+			select Q_sample.Nextval from dual
+</selectKey>
+		insert into SAMPLE
+		(SAMPLE_NUMBER,X_PRODNM,X_BRAND,X_SAMPLEAMOUNT,X_SAMPLELEVEL,X_BATCHNUM,X_SAMPLESTATE,X_SAMPLE_KEEP,X_SAMPLERECORDNO,X_ORGNAME,X_PROD_YIELDNAME,X_ADDR,X_POST,X_CONTACTTEL,X_FILES,X_TEST_REQU1,X_TEST_ITEMS,X_STANDARDS,X_OWN_STD,X_REMARK,X_CONTACTMAN,X_INSPYIELDDATE,X_TEST_REQU2,X_TEST_REQU3,X_TEST_REQU4,X_TEST_REQU5,X_REPORT_DELIVER,X_REPORT_NUM,DUE_DATE,X_SAMPLE_HANDLE,X_SERVICE_TYPE,X_SERVICE_FEE,X_LABLE_NUMS,X_UPTO,SAMPLING_POINT,PRODUCT_GRADE,SPEC_TYPE,GROUP_NAME,X_MANUSPCMODEL,
+		TEXT_ID,STATUS,OLD_STATUS,IN_SPEC,IN_CAL,CHANGED_ON,RE_SAMPLE,ALIQUOT,ORIGINAL_SAMPLE,PARENT_SAMPLE,PARENT_ALIQUOT,SAMPLE_VOLUME,LOGIN_DATE,LOGIN_BY,RECD_DATE,STARTED,PREP,PRODUCT_VERSION,PRIORITY,TEMPLATE,STANDARD,LOT,PARTIAL_SPEC,PRIMARY_IN_SPEC,RELEASED,IN_CONTROL,INVESTIGATED,APPROVED,READY_FOR_APPROVAL,APPROVAL_ID,MODIFIED_RESULTS,REPORT_NUMBER,COMPOSITE,PARENT_COMPOSITE,PEOPLE,CHK_ALIQUOT_STATUS,CHK_ALIQUOT_SPECS,SAMPLE_EVENT,HAS_FLAGS,SAMPLED,NUM_CONTAINERS,REQD_VOLUME,COLLECTION_OFFSET,SIGNED,X_YEARTOTALOUTPUT,X_LABLE_BNUMS,X_PRODUCT_UNIT,X_LABLE_RESULT,X_SAMPLE_TYPE,X_ISEXPORT,X_PLANTYPE4,X_WORKERNUM,X_YEARSALE,X_PRICE,PRODUCT,STAGE,X_COA_STATUS)
+		values
+		(#{sample_number},#{x_prodnm},#{x_brand},#{x_sampleamount},#{x_samplelevel},#{x_batchnum},#{x_samplestate},#{x_sample_keep},#{x_samplerecordno},#{x_orgname},#{x_prod_yieldname},#{x_addr},#{x_post},#{x_contacttel,},#{x_files},#{x_test_requ1},#{x_test_items},#{x_standards},#{x_own_std},#{
+		x_remark},#{x_contactman},TO_DATE(#{x_inspyielddate},'YYYY-MM-DD'),#{x_test_requ2},#{x_test_requ3},#{x_test_requ4},#{x_test_requ5},#{x_report_deliver},#{x_report_num},to_date(#{due_date},'YYYY-MM-DD'),#{x_sample_handle},#{x_service_type},#{x_service_fee},#{x_lable_nums},#{x_upto},#{sampling_point},#{PRODUCT_GRADE},#{spec_type},#{group_name},#{x_manuspcmodel},
+		#{TEXT_ID},#{STATUS},#{OLD_STATUS},#{IN_SPEC},#{IN_CAL},#{CHANGED_ON},#{RE_SAMPLE},#{ALIQUOT},#{sample_number},#{PARENT_SAMPLE},#{PARENT_ALIQUOT},#{SAMPLE_VOLUME},TO_DATE(#{LOGIN_DATE},'YYYY-MM-DD'),#{LOGIN_BY},TO_DATE(#{RECD_DATE},'YYYY-MM-DD'),#{STARTED},#{PREP},#{PRODUCT_VERSION},#{PRIORITY},#{TEMPLATE},#{STANDARD},#{LOT},#{PARTIAL_SPEC},#{PRIMARY_IN_SPEC},#{RELEASED},#{IN_CONTROL},#{INVESTIGATED},#{APPROVED},#{READY_FOR_APPROVAL},#{APPROVAL_ID},#{MODIFIED_RESULTS},#{REPORT_NUMBER},#{COMPOSITE},#{PARENT_COMPOSITE},#{PEOPLE},#{CHK_ALIQUOT_STATUS},#{CHK_ALIQUOT_SPECS},#{SAMPLE_EVENT},#{HAS_FLAGS},#{SAMPLED},#{NUM_CONTAINERS},#{REQD_VOLUME},#{COLLECTION_OFFSET},#{SIGNED},#{X_YEARTOTALOUTPUT},#{X_LABLE_BNUMS},#{X_PRODUCT_UNIT},#{X_LABLE_RESULT},#{X_SAMPLE_TYPE},#{X_ISEXPORT},#{X_PLANTYPE4},#{X_WORKERNUM},#{X_YEARSALE},#{X_PRICE},#{product},#{STAGE},#{x_coa_status})
+
+	</insert>
+	<resultMap id="samplerKeep" type="com.labway.portal.po.SamplerKeep">
+		<id column="KID" property="kid" />
+		<result column="KNAME" property="kname" />
+
+	</resultMap>
+	<select id="getSampleKeep" resultMap="samplerKeep">
+		select * from t_sample_keep where 1=1
+</select>
+<!---->
+	<select id="getProduct" resultMap="product" parameterType="String">
+		select NAME,DESCRIPTION,X_REVIEWED from product where DESCRIPTION like
+		'%' || #{name} || '%' or NAME like '%' || #{name} || '%'
+</select>
+	<resultMap type="com.labway.portal.po.Product" id="product">
+
+		<id column="NAME" property="name" />
+		<result column="DESCRIPTION" property="description" />
+		<result column="X_REVIEWED " property="x_reviewed" />
+	</resultMap>
+<!---->
+	<select id="getGrade" resultMap="grade" parameterType="String">
+		select distinct(SAMPLING_POINT) from prod_grade_stage where
+		product=#{prodname}
+</select>
+	<resultMap type="com.labway.portal.po.Grade" id="grade">
+		<result column="SAMPLING_POINT" property="prodgrade" />
+	</resultMap>
+
+	<select id="getDengji" resultMap="dengji" parameterType="String">
+		select distinct(GRADE) from prod_grade_stage where product=#{prodname}
+	</select>
+	<resultMap type="com.labway.portal.po.Dengji" id="dengji">
+		<result column="GRADE" property="dengji" />
+	</resultMap>
+
+	<select id="getSpecType" resultMap="spectype" parameterType="String">
+		select distinct(Spec_Type) from prod_grade_stage where
+		product=#{prodname}
+</select>
+	<resultMap type="com.labway.portal.po.SpecType" id="spectype">
+		<result column="Spec_Type" property="spectype" />
+	</resultMap>
+
+	<select id="getSampleMaxNum" resultType="int">
+		select max(SAMPLE_NUMBER) from sample where 1=1
+ </select>
+	<!-- 获取样品 -->
+	<select id="getSample" resultMap="sample" parameterType="int">
+		select SAMPLE_NUMBER,X_PRODNM,X_BRAND,X_MANUSPCMODEL,X_SAMPLEAMOUNT,
+		X_SAMPLELEVEL ,X_BATCHNUM
+		,X_SAMPLESTATE,X_INSPYIELDDATE,X_SAMPLERECORDNO,X_ORGNAME,X_PROD_YIELDNAME,X_ADDR,X_POST,X_CONTACTTEL,X_FILES,X_TEST_REQU1,X_TEST_REQU2,X_TEST_REQU3,X_TEST_REQU4,X_TEST_REQU5,X_REPORT_DELIVER,X_REPORT_NUM,DUE_DATE,X_SAMPLE_HANDLE,x_service_type,X_SERVICE_FEE,x_standards,x_remark,x_contactman,X_LABLE_NUMS,X_UPTO,SAMPLING_POINT,PRODUCT
+		,X_TEST_ITEMS,X_REPORT_NUM,DUE_DATE ,x_own_std,original_sample from
+		sample where SAMPLE_NUMBER like '%' || #{samplename} || '%' 
+</select>
+	<resultMap type="com.labway.portal.po.Sample" id="sample">
+
+		<id column="SAMPLE_NUMBER" property="sample_number" />
+		<result column="X_PRODNM" property="x_prodnm" />
+		<result column="X_BRAND " property="x_brand" />
+		<result column="X_MANUSPCMODEL" property="x_manuspcmodel" />
+		<result column="X_SAMPLEAMOUNT" property="x_sampleamount" />
+		<result column="X_SAMPLELEVEL" property="x_samplelevel" />
+		<result column="X_BATCHNUM" property="x_batchnum" />
+		<result column="X_SAMPLESTATE" property="x_samplestate" />
+		<result column="X_INSPYIELDDATE" property="x_inspyielddate" />
+		<result column="X_SAMPLERECORDNO" property="x_samplerecordno" />
+		<result column="X_ORGNAME" property="x_orgname" />
+		<result column="X_PROD_YIELDNAME" property="x_prod_yieldname" />
+		<result column="X_ADDR" property="x_addr" />
+		<result column="X_POST" property="x_post" />
+		<result column="X_CONTACTTEL" property="x_contacttel" />
+		<result column="X_FILES" property="x_files" />
+		<result column="X_TEST_REQU1" property="x_test_requ1" />
+		<result column="X_TEST_REQU2" property="x_test_requ2" />
+		<result column="X_TEST_REQU3" property="x_test_requ3" />
+		<result column="X_TEST_REQU4" property="x_test_requ4" />
+		<result column="X_TEST_REQU5" property="x_test_requ5" />
+		<result column="X_REPORT_DELIVER" property="x_report_deliver" />
+		<result column="X_REPORT_NUM" property="x_report_num" />
+		<result column="DUE_DATE" property="due_date" />
+		<result column="X_SAMPLE_HANDLE" property="x_sample_handle" />
+		<result column="X_SERVICE_TYPE" property="x_service_type" />
+		<result column="X_SERVICE_FEE" property="x_service_fee" />
+		<result column="X_STANDARDS" property="x_standards" />
+		<result column="X_REMARK" property="x_remark" />
+		<result column="X_CONTACTMAN" property="x_contactman" />
+		<result column="X_LABLE_NUMS" property="x_lable_nums" />
+		<result column="X_UPTO" property="x_upto" />
+		<result column="SAMPLING_POINT" property="sampling_point" />
+		<result column="PRODUCT" property="product" />
+		<result column="X_TEST_ITEMS" property="x_test_items" />
+		<result column="X_OWN_STD" property="x_own_std" />
+		<result column="ORIGINAL_SAMPLE" property="original_sample" />
+
+
+	</resultMap>
+	<select id="getSampleOne" parameterType="int" resultType="com.labway.portal.po.Sample">
+		select SAMPLE_NUMBER,X_PRODNM,X_BRAND,X_MANUSPCMODEL,X_SAMPLEAMOUNT,
+		X_SAMPLELEVEL ,X_BATCHNUM ,X_SAMPLESTATE,
+		X_INSPYIELDDATE,X_SAMPLERECORDNO,X_ORGNAME,X_PROD_YIELDNAME,X_ADDR,X_POST,X_CONTACTTEL,X_FILES,X_TEST_REQU1,X_TEST_REQU2,
+		X_TEST_REQU3,X_TEST_REQU4,X_TEST_REQU5,X_REPORT_DELIVER,X_REPORT_NUM,DUE_DATE,X_SAMPLE_HANDLE,x_service_type,X_SERVICE_FEE,
+		x_standards,x_remark,x_contactman,X_LABLE_NUMS,X_UPTO,SAMPLING_POINT,PRODUCT,X_SAMPLE_KEEP,X_TEST_ITEMS,X_REPORT_NUM,DUE_DATE
+		,
+		x_own_std,ORIGINAL_SAMPLE,group_name,x_report_deliver from sample where SAMPLE_NUMBER=#{sampn}
+</select>
+	<update id="updateSample" parameterType="com.labway.portal.po.Sample">
+
+		update SAMPLE
+		<set>
+			<if test="x_prodnm !=null">X_PRODNM= #{x_prodnm},</if>
+			<if test="x_brand!=null">X_BRAND=#{x_brand},</if>
+			<if test="x_sampleamount!=null">X_SAMPLEAMOUNT=#{x_sampleamount},</if>
+			<if test="x_samplelevel!=null">X_SAMPLELEVEL=#{x_samplelevel},</if>
+			<if test="x_batchnum!=null">X_BATCHNUM=#{x_batchnum},</if>
+			<if test="x_samplestate!=null">X_SAMPLESTATE=#{x_samplestate},</if>
+			<if test="x_sample_keep!=null">X_SAMPLE_KEEP=#{x_sample_keep},</if>
+			<if test="x_samplerecordno!=null">X_SAMPLERECORDNO=#{x_samplerecordno},</if>
+			<if test="x_orgname!=null">X_ORGNAME=#{x_orgname},</if>
+			<if test="x_prod_yieldname!=null">X_PROD_YIELDNAME=#{x_prod_yieldname},</if>
+			<if test="x_addr!=null">X_ADDR=#{x_addr},</if>
+			<if test="x_post!=null">X_POST=#{x_post},</if>
+			<if test="x_contacttel!=null">X_CONTACTTEL=#{x_contacttel},</if>
+			<if test="x_files!=null">X_FILES=#{x_files},</if>
+			<if test="x_test_requ1!=null">X_TEST_REQU1=#{x_test_requ1},</if>
+			<if test="x_test_items!=null">X_TEST_ITEMS=#{x_test_items},</if>
+			<if test="x_standards!=null">X_STANDARDS=#{x_standards},</if>
+			<if test="x_own_std!=null">X_OWN_STD=#{x_own_std},</if>
+			<if test="x_contactman!=null">X_CONTACTMAN=#{x_contactman},</if>
+			<if test="x_inspyielddate!=null">X_INSPYIELDDATE=TO_DATE(#{x_inspyielddate},'YYYY-MM-DD'),
+			</if>
+			<if test="x_test_requ2!=null">X_TEST_REQU2=#{x_test_requ2},</if>
+			<if test="x_test_requ3!=null">X_TEST_REQU3=#{x_test_requ3},</if>
+			<if test="x_test_requ4!=null">X_TEST_REQU4=#{x_test_requ4},</if>
+			<if test="x_test_requ5!=null">X_TEST_REQU5=#{x_test_requ5},</if>
+			<if test="x_report_deliver!=null">X_REPORT_DELIVER=#{x_report_deliver},</if>
+			<if test="x_report_num!=null">X_REPORT_NUM=#{x_report_num},</if>
+			<if test="due_date!=null">DUE_DATE=TO_DATE(#{due_date},'YYYY-MM-DD'),</if>
+			<if test="x_sample_handle!=null">X_SAMPLE_HANDLE=#{x_sample_handle},</if>
+			<if test="x_service_type!=null">X_SERVICE_TYPE=#{x_service_type},</if>
+			<if test="x_service_fee!=null">X_SERVICE_FEE=#{x_service_fee},</if>
+			<if test="x_lable_nums!=null">X_LABLE_NUMS=#{x_lable_nums},</if>
+			<if test="x_upto!=null">X_UPTO=#{x_upto},</if>
+			<if test="sampling_point!=null">SAMPLING_POINT=#{sampling_point},</if>
+			<if test="spec_type!=null">SPEC_TYPE=#{spec_type},</if>
+			<if test="x_remark!=null">X_REMARK=#{x_remark},</if>
+			<if test="group_name!=null">Group_Name=#{group_name},</if>
+			<if test="x_manuspcmodel!=null">X_MANUSPCMODEL=#{x_manuspcmodel},</if>
+			<if test="sample_number!=null">ORIGINAL_SAMPLE=#{sample_number}</if>
+		</set>
+		where SAMPLE_NUMBER=#{sample_number}
+
+	</update>
+
+
+
+
+</mapper>

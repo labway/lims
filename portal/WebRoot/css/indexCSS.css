@@ -1,0 +1,103 @@
+@charset "utf-8";
+/* CSS Document */
+body{	
+	width:1300px;
+	height:auto;
+	margin:0 auto;
+	padding:0 auto;
+}
+
+/*隐藏div*/
+#aa{
+	width: 900px;
+	height:auto;
+	display:none;
+	position: absolute;
+	background:#00afff;
+	z-index:20;
+	margin-top:100px;
+	margin-left: 200px;
+	}
+/*隐藏div2*/
+#ee{
+	margin: 0 auto;
+	padding:0 auto;
+	}
+/*隐藏表*/
+.t1{
+	width:800px;
+	height:auto;
+	
+}
+#maintable{
+	margin: 0 50px 50px;
+	
+	}
+#sp{
+	margin-left:200px;	
+	text-align: center;
+	font-size: 30px;
+	color:000;
+	font-weight: bold;
+	
+	}
+/*表格2	*/
+.t2{
+	width:1200px;
+	height:auto;
+	border: 0px;	
+}
+.t2 tr td{
+	border-left:0px; 
+	border-bottom:0px;
+	}
+ .t2 tr td:first-child{
+ width: 150px;
+  border-left:solid 1px #000;
+  border-right: 0px;
+ }
+/* t2最后一行底线*/
+ #zh{
+ border-bottom: solid 1px #000;
+ }
+
+.biaoti{
+	text-align:center;
+	background: #aaaaff;
+}
+.bitian{
+	color: blue;
+	}
+/*加减按钮*/
+.btn{
+	width: 20px;
+	font-size: 14px;
+	}
+/*提交按钮*/
+.btn2{
+	width: 100px;
+	font-size: 14px;
+	margin-left: 200px;
+	background: #aaaaff;
+	
+	}
+/*关闭按钮*/
+.clo{
+	float:right;
+	}
+/*sampledisp*/
+#bb{
+	width: 900px;
+	height:200px;
+	display:none;
+	position: absolute;
+	background:#00afff;
+	z-index:100;
+	margin-top:500px;
+	margin-left: 200px;
+	}
+/*样品号*/
+.yangpinhao{
+	color:#f00;
+	border:0px;
+	}
